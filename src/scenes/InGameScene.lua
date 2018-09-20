@@ -4,8 +4,10 @@ InGameScene.__index = InGameScene
 
 function InGameScene:new(world)
     local this = {
+        sound = love.audio.newSource("assets/sfx/FishHomeBackAudio.wav", "static"),
     }
-
+    this.sound:setLooping(true)
+    this.sound:play()
     return setmetatable(this, InGameScene)
 end
 
