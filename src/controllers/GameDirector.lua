@@ -37,8 +37,7 @@ end
 function GameDirector:new()
     
     local playerAnimation = {
-        --idle = GameDirector:configureSpriteSheet("Player_idle.json", "assets/sprites/Player/", true, nil, 1, 1, true),
-        --moving = GameDirector:configureSpriteSheet("Player_idle_Move.json", "assets/sprites/Player/", true, 0.1, 1, 1, true),
+        moving = GameDirector:configureSpriteSheet("Player_Move.json", "assets/sprites/player/", true, 0.1, 1, 1, true),
     }
 
     local LifeForm = require "models.value.LifeForm"
@@ -48,6 +47,7 @@ function GameDirector:new()
         world = world,
         player = Player:new(playerAnimation, world.world),
         dangerBar = ProgressBar:new(20, 20, 200, 40, {1, 0, 0}, 15, 15),
+        starveBar = ProgressBar:new(20, 20, 200, 40, {1, 0, 0}, 15, 15),
         cameraController = CameraController:new(),
         gameState = GameState:new(),
         --Libraries
@@ -58,14 +58,12 @@ function GameDirector:new()
         }
     }
 
-    this.gameState:save(this.player, "player")
     this.gameState:save(this.dangerBar, "dangerBar")
     return setmetatable(this, GameDirector)
 end
 
 function GameDirector:reset()
     self.dangerBar = self.gameState:load("dangerBar")
-    self.player = self.gameState:load("player")
     self.player:reset()
 end
 

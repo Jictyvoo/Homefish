@@ -20,8 +20,8 @@ function CameraController:isOnCenter(xPosition, yPosition)
 end
 
 function CameraController:update(dt)
-    local inGround = gameDirector:getMainCharacter().inGround
-    local x, y = gameDirector:getMainCharacter():getPosition()
+    local inGround = gameDirector:getPlayer().inGround
+    local x, y = gameDirector:getPlayer():getPosition()
     self.gamera:setPosition(x, inGround and y or self.previousPosition.y)
     if inGround then
         self.previousPosition.x, self.previousPosition.y = x, y

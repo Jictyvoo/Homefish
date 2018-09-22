@@ -7,7 +7,6 @@ function InGameScene:new(world)
         sound = love.audio.newSource("assets/sfx/FishHomeBackAudio.wav", "static"),
     }
     this.sound:setLooping(true)
-    this.sound:play()
     return setmetatable(this, InGameScene)
 end
 
@@ -15,15 +14,16 @@ function InGameScene:keypressed(key, scancode, isrepeat)
     if key == "escape" then
         sceneDirector:switchSubscene("pause")
     end
-    gameDirector:getMainCharacter():keypressed(key, scancode, isrepeat)
+    gameDirector:getPlayer():keypressed(key, scancode, isrepeat)
 end
 
 function InGameScene:keyreleased(key, scancode)
-    gameDirector:getMainCharacter():keyreleased(key, scancode)
+    gameDirector:getPlayer():keyreleased(key, scancode)
 end
 
 function InGameScene:reset()
     gameDirector:reset()
+    self.sound:play()
 end
 
 function InGameScene:update(dt)
@@ -31,14 +31,10 @@ function InGameScene:update(dt)
 end
 
 function InGameScene:draw()
-    local mainCharacter, characterController = gameDirector:getMainCharacter()
-    gameDirector:getLifeBar():draw()
-    love.graphics.printf(string.format("Money: %d", characterController:getMoney()), 20, 60, 100, 'center')
+    local player, characterController = gameDirector:getPlayer()
+    gameDirector:getDangerBar():draw()
     gameDirector:getCameraController():draw(function()
-        mainCharacter:draw()
-        gameDirector:getEnemiesController():draw()
-        self.ground:draw()
-        gameDirector:drawBullets()
+        player:draw()
     end)
 end
 
