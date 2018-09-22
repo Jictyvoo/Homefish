@@ -3,11 +3,10 @@ CreditsScene.__index = CreditsScene
 
 function CreditsScene:new()
     local this = {
-        mechanics = {"Jictyvoo - João Victor Oliveira Couto"},
-        enemyAi = {"Atônio Crispin", "João Victor Oliveira Couto"},
-        gameDesign = {"João Victor Oliveira Couto"},
-        designers = {enemies = "Lucas Silva Lima", player = "Manuella Vieira", gui = "Lokisley"},
-        levelDesign = {"João Victor Oliveira Couto", "Lokisley Oliveira", "Manuella Vieira"},
+        mechanics = {"João Victor Oliveira Couto"},
+        enemyAi = {"João Victor Oliveira Couto"},
+        gameDesign = {"Lucas Silva Lima", "Ananias Correia do Nascimento", "João Victor Oliveira Couto"},
+        soudEditor = {"Ananias Correia do Nascimento"},
         companyImage = love.graphics.newImage("assets/engine_logo.png"),
         y = love.graphics.getHeight(),
         elapsedTime = 0,
@@ -53,37 +52,37 @@ function CreditsScene:draw()
     love.graphics.printf("Mechanics Programmers", x, y, 400, "left")
     y = y + 20
     for _, mechanics in pairs(self.mechanics) do
-        love.graphics.printf(mechanics, x, y, 400, "center")
+        love.graphics.printf(mechanics, x, y, 400, "left")
         y = y + 20
     end
+
+
     y = y + 15
     love.graphics.printf("Enemies AI Programmers", x, y, 400, "left")
     y = y + 20
     for _, enemyAi in pairs(self.enemyAi) do
-        love.graphics.printf(enemyAi, x, y, 400, "center")
+        love.graphics.printf(enemyAi, x, y, 400, "left")
         y = y + 20
     end
+
+
+    y = y + 15
+    love.graphics.printf("Soud Editor", x, y, 400, "left")
+    y = y + 20
+    for _, soudEditor in pairs (self.soudEditor) do
+        love.graphics.printf(soudEditor, x, y, 400, "left")
+        y = y + 20
+    end
+
+
     y = y + 15
     love.graphics.printf("Game Designers", x, y, 400, "left")
     y = y + 20
     for _, gameDesign in pairs(self.gameDesign) do
-        love.graphics.printf(gameDesign, x, y, 400, "center")
+        love.graphics.printf(gameDesign, x, y, 400, "left")
         y = y + 20
     end
-    y = y + 15
-    love.graphics.printf("Sprite Designers", x, y, 400, "left")
-    y = y + 20
-    for _, designers in pairs(self.designers) do
-        love.graphics.printf(designers, x, y, 400, "center")
-        y = y + 20
-    end
-    y = y + 15
-    love.graphics.printf("Level Design", x, y, 400, "left")
-    y = y + 20
-    for _, levelDesign in pairs(self.levelDesign) do
-        love.graphics.printf(levelDesign, x, y, 400, "center")
-        y = y + 20
-    end
+
     y = y + 30
     local scales = scaleDimension:getScale("splash_company")
     love.graphics.draw(self.companyImage, scales.x, y, 0, scales.relative.x, scales.relative.y)
