@@ -17,7 +17,8 @@ function Player:new(spriteAnimation, world)
         animation = "moving",
         movingKeys = {up = "up", down = "down", left = "left", right = "right"},
         world = world or love.physics.newWorld(0, 0),
-        spriteAnimation = spriteAnimation or nil
+        spriteAnimation = spriteAnimation or nil,
+        sound = love.audio.newSource("assets/sfx/FishSwimming.wav", "static"),
     }
     
     --aplying physics
@@ -146,10 +147,17 @@ function Player:draw()
     if self.spriteAnimation then
         local positionToDraw = self.animation
         local scaleX = self.orientation == "right" and 1 or -1
+<<<<<<< HEAD
         local x = self.x ~= 0 and self.x or self.body:getX()
         local y = self.y ~= 0 and self.y or self.body:getY()
         self.spriteAnimation[positionToDraw]:draw(x, y, scaleX * self.scale, self.scale)
         --love.graphics.polygon("line", self.body:getWorldPoints(self.shape:getPoints()))
+=======
+        self.spriteAnimation[positionToDraw]:draw(self.body:getX(), self.body:getY(), scaleX)
+        love.graphics.polygon("line", self.body:getWorldPoints(self.shape:getPoints()))
+        self.sound:play()
+        self.sound:setLooping(true)
+>>>>>>> fb4bceca90de45849a436f8031fea3eb4e73f13c
     end
 end
 
