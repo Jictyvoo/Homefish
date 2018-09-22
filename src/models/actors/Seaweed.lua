@@ -13,7 +13,17 @@ function Seaweed:new(animation, world, x, y)
     }
     this.fixture = love.physics.newFixture(this.body, this.shape, 1)
     this.fixture:setUserData("Scenary")
-    return setmetatable(this)
+    this.fixture:setCategory(3)
+    this.fixture:setMask(1, 2, 4)
+    return setmetatable(this, Seaweed)
+end
+
+function Seaweed:compareFixture(fixture)
+    return self.fixture == fixture
+end
+
+function Seaweed:getPosition()
+    return self.body:getX(), self.body:getY()
 end
 
 function Seaweed:update(dt)
@@ -21,7 +31,8 @@ function Seaweed:update(dt)
 end
 
 function Seaweed:draw()
-    self.animation:draw()
+    self.animation:draw(self.body:getX(), self.body:getY(), 0.125, 0.125)
+    --love.graphics.polygon("line", self.body:getWorldPoints(self.shape:getPoints()))
 end
 
 return Seaweed

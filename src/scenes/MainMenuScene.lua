@@ -27,7 +27,7 @@ function MainMenuScene:new()
         buttonNames = {}
     }
     scaleDimension:calculeScales("menuBackground", this.background:getWidth(), this.background:getHeight(), 0, 0)
-    scaleDimension:calculeScales("menuLogo", 150, 110, 0, 50)
+    scaleDimension:calculeScales("menuLogo", 300, 220, 0, 50)
     scaleDimension:relativeScale("menuLogo", {width = this.logo:getWidth(), height = this.logo:getHeight()})
     scaleDimension:centralize("menuLogo", true, false, false, false)
 

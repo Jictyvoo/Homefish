@@ -5,6 +5,8 @@ Player.__index = Player
 function Player:new(spriteAnimation, world)
     
     local this = {
+        scale = 0.125,
+        x = 0, y = 0,
         move = false,
         hidden = false,
         invulnerable = {time = 20, toggle = false, limit = 20},
@@ -21,7 +23,7 @@ function Player:new(spriteAnimation, world)
     --aplying physics
     this.body = love.physics.newBody(this.world, 10, 700, "dynamic")
     this.body:setFixedRotation(true)
-    this.shape = love.physics.newRectangleShape(58, 54)
+    this.shape = love.physics.newRectangleShape(58, 30)
     this.fixture = love.physics.newFixture(this.body, this.shape, 1)
     this.fixture:setUserData("Player")
     this.fixture:setMask(2)
@@ -42,6 +44,8 @@ function Player:keypressed(key, scancode, isrepeat)
             self.fixture:setCategory(3) -- category to colide with scenary
         else
             self.fixture:setCategory(1)
+            self.x, self.y = 0, 0
+            self.hidden = false
         end
         self.elapsedTime = 0
     end
@@ -61,7 +65,10 @@ function Player:getPosition()
 end
 
 function Player:setPosition(x, y)
-    self.body:setX(x); self.body:setY(y)
+    assert(x and y, "X and Y must be a value")
+    self.body:setLinearVelocity(0, 0)
+    self.body:setSleepingAllowed(false)
+    self.x, self.y = x, y
 end
 
 function Player:stopMoving()
@@ -71,6 +78,7 @@ end
 
 function Player:hide(x, y)
     self.hidden = true
+    self.fixture:setCategory(4)
     self:setPosition(x, y)
 end
 
@@ -138,8 +146,10 @@ function Player:draw()
     if self.spriteAnimation then
         local positionToDraw = self.animation
         local scaleX = self.orientation == "right" and 1 or -1
-        self.spriteAnimation[positionToDraw]:draw(self.body:getX(), self.body:getY(), scaleX)
-        love.graphics.polygon("line", self.body:getWorldPoints(self.shape:getPoints()))
+        local x = self.x ~= 0 and self.x or self.body:getX()
+        local y = self.y ~= 0 and self.y or self.body:getY()
+        self.spriteAnimation[positionToDraw]:draw(x, y, scaleX * self.scale, self.scale)
+        --love.graphics.polygon("line", self.body:getWorldPoints(self.shape:getPoints()))
     end
 end
 

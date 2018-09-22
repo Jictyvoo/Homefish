@@ -47,7 +47,7 @@ function GameDirector:new()
         elapsedTime = 0,
         world = world,
         player = Player:new(playerAnimation, world.world),
-        dangerBar = ProgressBar:new(20, 20, 200, 40, {1, 0, 0}, 15, 15),
+        dangerBar = ProgressBar:new(20, 20, 200, 40, {1, 0, 0}, 100, 0),
         starveBar = ProgressBar:new(20, 20, 200, 40, {0.45, 0.39, 0}, 100, 100),
         entityController = EntityController:new(),
         playerController = PlayerController:new(LifeForm:new("Player", 100)),
@@ -60,12 +60,12 @@ function GameDirector:new()
             ProgressBar = ProgressBar, GameState = GameState, ButtonManager = ButtonManager
         }
     }
-
     this.gameState:save(this.dangerBar, "dangerBar")
     return setmetatable(this, GameDirector)
 end
 
 function GameDirector:reset()
+    self.entityController:generateEntities(self.world.world)
     self.dangerBar = self.gameState:load("dangerBar")
     self.player:reset()
 end
@@ -136,7 +136,7 @@ end
 function GameDirector:update(dt)
     self.elapsedTime = self.elapsedTime + dt
     if self.elapsedTime > 0.01 then
-        if self.dangerBar:getValue() > 0 then
+        if self.starveBar:getValue() > 0 or self.dangerBar:getValue() < 100 then
             self.world:update(dt)
             self.player:update(dt)
             self.playerController:update(dt)
@@ -148,7 +148,7 @@ function GameDirector:update(dt)
         end
         self.elapsedTime = 0
     end
-    if self.player:getPosition() >= 900 then
+    if self.player:getPosition() >= 1200 then
         sceneDirector:switchSubscene("gameOver")
     end
 end

@@ -7,7 +7,7 @@ local beginContact = function(a, b, coll)
     local otherFixture = playerFixture == a and b or a
     if playerFixture then
         if otherFixture:getUserData() == "Scenary" then
-            local x, y = gameDirector:getEntityByFixture():getPosition()
+            local x, y = gameDirector:getEntityByFixture(otherFixture):getPosition()
             gameDirector:getPlayer():hide(x, y)
         end
     end

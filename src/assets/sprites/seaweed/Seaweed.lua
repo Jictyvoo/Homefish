@@ -1,94 +1,94 @@
 return {
-	frames = {
-		player1 = {
-			spriteSourceSize = {
-				y = 0,
-				x = 0,
-				w = 512,
-				h = 512,
-			},
-			rotated = false,
-			sourceSize = {
-				w = 512,
-				h = 512,
-			},
-			frame = {
-				y = 0,
-				x = 512,
-				w = 512,
-				h = 512,
-			},
-			trimmed = false,
-		},
-		player2 = {
-			spriteSourceSize = {
-				y = 0,
-				x = 0,
-				w = 512,
-				h = 512,
-			},
-			rotated = false,
-			sourceSize = {
-				w = 512,
-				h = 512,
-			},
-			frame = {
-				y = 512,
-				x = 0,
-				w = 512,
-				h = 512,
-			},
-			trimmed = false,
-		},
-		player3 = {
-			spriteSourceSize = {
-				y = 0,
-				x = 0,
-				w = 512,
-				h = 512,
-			},
-			rotated = false,
-			sourceSize = {
-				w = 512,
-				h = 512,
-			},
-			frame = {
-				y = 512,
-				x = 512,
-				w = 512,
-				h = 512,
-			},
-			trimmed = false,
-		},
-		player0 = {
-			spriteSourceSize = {
-				y = 0,
-				x = 0,
-				w = 512,
-				h = 512,
-			},
-			rotated = false,
-			sourceSize = {
-				w = 512,
-				h = 512,
-			},
-			frame = {
-				y = 0,
-				x = 0,
-				w = 512,
-				h = 512,
-			},
-			trimmed = false,
-		},
-	},
 	meta = {
-		format = "RGBA8888",
+		image = "Seaweed.png",
 		version = "1.0",
 		size = {
 			w = 1024,
 			h = 1024,
 		},
-		image = "Player_Move.png",
 		app = "https://github.com/piskelapp/piskel/",
+		format = "RGBA8888",
+	},
+	frames = {
+		Seaweed3 = {
+			trimmed = false,
+			rotated = false,
+			sourceSize = {
+				w = 512,
+				h = 512,
+			},
+			frame = {
+				w = 512,
+				x = 512,
+				y = 512,
+				h = 512,
+			},
+			spriteSourceSize = {
+				w = 512,
+				x = 0,
+				y = 0,
+				h = 512,
+			},
+		},
+		Seaweed2 = {
+			trimmed = false,
+			rotated = false,
+			sourceSize = {
+				w = 512,
+				h = 512,
+			},
+			frame = {
+				w = 512,
+				x = 0,
+				y = 512,
+				h = 512,
+			},
+			spriteSourceSize = {
+				w = 512,
+				x = 0,
+				y = 0,
+				h = 512,
+			},
+		},
+		Seaweed1 = {
+			trimmed = false,
+			rotated = false,
+			sourceSize = {
+				w = 512,
+				h = 512,
+			},
+			frame = {
+				w = 512,
+				x = 512,
+				y = 0,
+				h = 512,
+			},
+			spriteSourceSize = {
+				w = 512,
+				x = 0,
+				y = 0,
+				h = 512,
+			},
+		},
+		Seaweed0 = {
+			trimmed = false,
+			rotated = false,
+			sourceSize = {
+				w = 512,
+				h = 512,
+			},
+			frame = {
+				w = 512,
+				x = 0,
+				y = 0,
+				h = 512,
+			},
+			spriteSourceSize = {
+				w = 512,
+				x = 0,
+				y = 0,
+				h = 512,
+			},
+		},
 	},
 }
