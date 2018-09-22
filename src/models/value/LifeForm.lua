@@ -7,11 +7,15 @@ function LifeForm:new(name, starve)
 		starve = {have = starve or 15, total = starve or 15}
 	}
 
-	return this
+	return setmetatable(this, LifeForm)
 end
 
-function LifeForm:getdanger()
-	return self.danger
+function LifeForm:getStarve()
+	return self.starve
+end
+
+function LifeForm:changeStarve(amount)
+	self.starve.have = self.starve.have + amount
 end
 
 return LifeForm

@@ -6,8 +6,10 @@ function Player:new(spriteAnimation, world)
     
     local this = {
         move = false,
+        hidden = false,
         invulnerable = {time = 20, toggle = false, limit = 20},
         speed = 250,
+        elapsedTime = 0,
         orientation = "right",
         direction = "right",
         animation = "moving",
@@ -29,14 +31,19 @@ function Player:new(spriteAnimation, world)
 end
 
 function Player:keypressed(key, scancode, isrepeat)
-    if self.movingKeys[key] then
+    if self.movingKeys[key] and not self.hidden then
         self.direction = key;
         self.move = true
         self.orientation = self.movingKeys[key] == "left" and "left" or self.movingKeys[key] == "right" and "right" or self.orientation
     end
 
     if key == "space" then
-        self.fixture.setCategory(3) -- category to colide with scenary
+        if not self.hidden then
+            self.fixture:setCategory(3) -- category to colide with scenary
+        else
+            self.fixture:setCategory(1)
+        end
+        self.elapsedTime = 0
     end
 end
 
@@ -62,14 +69,25 @@ function Player:stopMoving()
     self.body:setLinearVelocity(0, yVelocity)
 end
 
+function Player:hide(x, y)
+    self.hidden = true
+    self:setPosition(x, y)
+end
+
 function Player:reset()
     self.move = false
+    self.hidden = false
     self.body:setLinearVelocity(0, 0)
     self.body:setX(10); self.body:setY(700)
     self.orientation = "right"
     self.direction = "right"
     self.animation = "moving"
     self.invulnerable.time = 20
+    self.invulnerable.active = false
+end
+
+function Player:beVulnerable()
+    self.fixture:setCategory(1)
 end
 
 function Player:getOrientation()
@@ -87,6 +105,12 @@ function Player:retreat()
 end
 
 function Player:update(dt)
+    if self.fixture:getCategory() == 3 then
+        self.elapsedTime = self.elapsedTime + dt
+        if self.elapsedTime >= 0.5 then
+            self.fixture:setCategory(1)
+        end
+    end
     if self.spriteAnimation then
         self.spriteAnimation[self.animation]:update(dt)
     end

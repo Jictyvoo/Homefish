@@ -1,134 +1,103 @@
-local Enemy = {}
+local Fish = {}
 
-Enemy.__index = Enemy
+Fish.__index = Fish
 
-function Enemy:new(spriteAnimation, world, x, y, enemyType, colisorDimensions)
-    assert(colisorDimensions and type(colisorDimensions) == "table", "Enemy needs a colisor dimension and its need to be a table")
+function Fish:new(spriteAnimation, world)
+    
     local this = {
-        isMoving = false,
-        inGround = false,
-        speed = 100,
-        jumpForce = 320,
-        orientation = "left",
-        animation = "idle",
-        previousAnimation = "idle",
-        looking = nil,
-        world = world or love.physics.newWorld(0, 9.81 * 64),
-        spriteAnimation = spriteAnimation or nil,
-        lifeForm = gameDirector:getLibrary("LifeForm")(enemyType, 5, 2)
+        move = false,
+        speed = 250,
+        elapsedTime = 0,
+        orientation = "right",
+        direction = "right",
+        animation = "moving",
+        movingKeys = {up = "up", down = "down", left = "left", right = "right"},
+        world = world or love.physics.newWorld(0, 0),
+        spriteAnimation = spriteAnimation or nil
     }
     
     --aplying physics
-    this.body = love.physics.newBody(this.world, x or 0, y or 0, "dynamic")
+    this.body = love.physics.newBody(this.world, 10, 700, "dynamic")
     this.body:setFixedRotation(true)
-    this.shape = love.physics.newRectangleShape(unpack(colisorDimensions))
+    this.shape = love.physics.newRectangleShape(58, 54)
     this.fixture = love.physics.newFixture(this.body, this.shape, 1)
-    this.fixture:setUserData(enemyType or "Enemy")
-    this.fixture:setMask(3)
+    this.fixture:setUserData("Fish")
+    this.fixture:setMask(2)
+    this.fixture:setCategory(1)
     
-    return setmetatable(this, Enemy)
+    return setmetatable(this, Fish)
 end
 
-function Enemy:compareFixture(fixture)
+function Fish:move(key)
+    if self.movingKeys[key] and not self.hidden then
+        self.direction = key;
+        self.move = true
+        self.orientation = self.movingKeys[key] == "left" and "left" or self.movingKeys[key] == "right" and "right" or self.orientation
+    end
+end
+
+function Fish:getPosition()
+    return self.body:getX(), self.body:getY()
+end
+
+function Fish:setPosition(x, y)
+    self.body:setX(x); self.body:setY(y)
+end
+
+function Fish:stopMoving()
+    local xVelocity, yVelocity = self.body:getLinearVelocity()
+    self.body:setLinearVelocity(0, yVelocity)
+end
+
+function Fish:reset()
+    self.move = false
+    self.body:setLinearVelocity(0, 0)
+    self.body:setX(10); self.body:setY(700)
+    self.orientation = "right"
+    self.direction = "right"
+    self.animation = "moving"
+end
+
+function Fish:beVulnerable()
+    self.fixture:setCategory(1)
+end
+
+function Fish:getOrientation()
+    return self.orientation
+end
+
+function Fish:compareFixture(fixture)
     return self.fixture == fixture
 end
 
-function Enemy:reset()
-    self.isMoving = false
-    self.inGround = true
-    self.looking = nil
-    self.body:setLinearVelocity(0, 0)
-    self.body:setX(10); self.body:setY(700)
-    self.orientation = "left"
-    self.animation = "idle"
-    self.previousAnimation = "idle"
+function Fish:retreat()
+    self.invulnerable.time = 0
+    self.invulnerable.active = true
+    self.fixture:setCategory(2)
 end
 
-function Enemy:takeDamage(amount)
-    local isDead = self.lifeForm:takeDamage(amount)
-    if isDead then
-        self.fixture:destroy()
-        self.shape = nil
-        self.body:destroy()
-        gameDirector.enemiesController:remove(self)
-    end
-end
-
-function Enemy:endContact()
-    local xVelocity, yVelocity = self.body:getLinearVelocity()
-    self.body:setLinearVelocity(0, 0)
-end
-
-function Enemy:move(key)
-    if key == "up" then
-        self.looking = "up"
-    elseif key == "down" then
-        self.looking = "down"
-    elseif key == "left" then
-        self.orientation = "left"
-        self.isMoving = true
-    elseif key == "right" then
-        self.orientation = "right"
-        self.isMoving = true
-    end
-    if self.isMoving then self.animation = "running" end
-end
-
-function Enemy:jump()
-    self.body:applyLinearImpulse(0, -430)
-    self.inGround = false
-end
-
-function Enemy:getSpeed()
-    return self.speed
-end
-
-function Enemy:setSpeed(speed)
-    self.speed = speed
-end
-
-function Enemy:shot()
-    local verticalDirection = self.looking == "up" and - 20 or self.looking == "down" and 70 or 0
-    local horizontalDirection = verticalDirection ~= 0 and 0 or self.orientation == "right" and 10 or self.orientation == "left" and - 10 or 0
-    
-    local positionToDraw = self.looking == nil and self.orientation or self.looking
-    gameDirector:addBullet(self.body:getX() + horizontalDirection, self.body:getY() + verticalDirection, positionToDraw, 300, 3)
-end
-
-function Enemy:stopMoving(key)
-    if key == "left" or key == "right" then
-        if key == self.orientation then
-            self.isMoving = false
-            local xBodyVelocity, yBodyVelocity = self.body:getLinearVelocity()
-            self.body:setLinearVelocity(0, yBodyVelocity)
-            self.animation = "idle"
-        end
-    end
-    if key == "up" or key == "down" then
-        self.looking = nil
-    end
-end
-
-function Enemy:update(dt)
+function Fish:update(dt)
     if self.spriteAnimation then
-        if self.inGround and self.animation == "jumping" then
-            self.animation = self.previousAnimation
-        end
-        if self.isMoving then
-            local xBodyVelocity, yBodyVelocity = self.body:getLinearVelocity()
-            self.body:setLinearVelocity((self.orientation == "left" and -1 or 1) * self.speed, yBodyVelocity)
-        end
         self.spriteAnimation[self.animation]:update(dt)
     end
-end
-
-function Enemy:draw()
-    if self.spriteAnimation then
-        local positionToDraw = self.animation
-        local scaleX = self.orientation == "right" and -1 or 1
-        self.spriteAnimation[positionToDraw]:draw(self.body:getX(), self.body:getY(), scaleX)
-        --love.graphics.polygon("line", self.body:getWorldPoints(self.shape:getPoints()))
+    if self.move then
+        local xBodyVelocity, yBodyVelocity = 0, 0
+        if self.direction == "left" or self.direction == "right" then
+            xBodyVelocity = (self.direction == "left" and -1 or 1) * self.speed
+        else
+            yBodyVelocity = (self.direction == "down" and 1 or -1) * self.speed
+        end
+        self.body:setLinearVelocity(xBodyVelocity, yBodyVelocity)
     end
 end
 
-return Enemy
+function Fish:draw()
+    if self.spriteAnimation then
+        local positionToDraw = self.animation
+        local scaleX = self.orientation == "right" and 1 or -1
+        self.spriteAnimation[positionToDraw]:draw(self.body:getX(), self.body:getY(), scaleX)
+        love.graphics.polygon("line", self.body:getWorldPoints(self.shape:getPoints()))
+    end
+end
+
+return Fish

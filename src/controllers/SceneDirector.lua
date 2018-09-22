@@ -12,7 +12,8 @@ function SceneDirector:new()
             inGame = require "scenes.InGameScene":new(gameDirector:getWorld().world)
         },
         subsceneObjects = {
-            pause = require "scenes.subscenes.PauseGame":new()
+            pause = require "scenes.subscenes.PauseGame":new(),
+            gameOver = require "scenes.subscenes.GameOver":new()
         },
         sceneStack = gameDirector:getLibrary("Stack"):new()
     }

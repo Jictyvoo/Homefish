@@ -5,6 +5,7 @@ InGameScene.__index = InGameScene
 function InGameScene:new(world)
     local this = {
         sound = love.audio.newSource("assets/sfx/FishHomeBackAudio.wav", "static"),
+        background = love.graphics.newImage("assets/sprites/background.png")
     }
     this.sound:setLooping(true)
     return setmetatable(this, InGameScene)
@@ -31,8 +32,10 @@ function InGameScene:update(dt)
 end
 
 function InGameScene:draw()
+    love.graphics.draw(self.background)
     local player, characterController = gameDirector:getPlayer()
     gameDirector:getDangerBar():draw()
+    gameDirector:getStarveBar():draw()
     gameDirector:getCameraController():draw(function()
         player:draw()
     end)
