@@ -11,7 +11,6 @@ local endContact = function(a, b, coll)
 end
 
 function World:new()
-    love.physics.setMeter(64)
     world = love.physics.newWorld(0, 0)
     
     world:setCallbacks(beginContact, endContact)

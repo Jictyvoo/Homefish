@@ -44,6 +44,7 @@ function Player:keyreleased(key, scancode)
     if self.movingKeys[key] then
         if key == self.direction then
             self.move = false
+            self.body:setLinearVelocity(0, 0)
         end
     end
 end
@@ -66,6 +67,7 @@ function Player:reset()
     self.body:setLinearVelocity(0, 0)
     self.body:setX(10); self.body:setY(700)
     self.orientation = "right"
+    self.direction = "right"
     self.animation = "moving"
     self.invulnerable.time = 20
 end
@@ -99,10 +101,10 @@ function Player:update(dt)
     end
     if self.move then
         local xBodyVelocity, yBodyVelocity = 0, 0
-        if self.orientation == "left" or self.orientation == "right" then
-            xBodyVelocity = (self.orientation == "left" and 1 or -1) * self.speed
+        if self.direction == "left" or self.direction == "right" then
+            xBodyVelocity = (self.direction == "left" and -1 or 1) * self.speed
         else
-            yBodyVelocity = (self.orientation == "down" and 1 or -1) * self.speed
+            yBodyVelocity = (self.direction == "down" and 1 or -1) * self.speed
         end
         self.body:setLinearVelocity(xBodyVelocity, yBodyVelocity)
     end

@@ -13,6 +13,7 @@ local TilemapLoader = require "util.TilemapLoader"
 
 --Controllers
 local CameraController = require "controllers.CameraController"
+local PlayerController = require "controllers.PlayerController"
 
 --Gui Components
 local ButtonManager = require "util/ui/ButtonManager"
@@ -48,6 +49,7 @@ function GameDirector:new()
         player = Player:new(playerAnimation, world.world),
         dangerBar = ProgressBar:new(20, 20, 200, 40, {1, 0, 0}, 15, 15),
         starveBar = ProgressBar:new(20, 20, 200, 40, {1, 0, 0}, 15, 15),
+        playerController = PlayerController:new(),
         cameraController = CameraController:new(),
         gameState = GameState:new(),
         --Libraries

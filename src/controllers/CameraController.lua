@@ -4,7 +4,7 @@ CameraController.__index = CameraController
 function CameraController:new()
     local this = {
         previousOrientation = true, --[[ true if right, false is left --]]
-        previousPosition = {x = 0, y = 0},
+        previousPosition = {x = 0, y = 570},
         gamera = require "libs.gamera".new(0, 0, 2000, 2000)
     }
     this.gamera:setScale(2)
@@ -20,12 +20,9 @@ function CameraController:isOnCenter(xPosition, yPosition)
 end
 
 function CameraController:update(dt)
-    local inGround = gameDirector:getPlayer().inGround
-    local x, y = gameDirector:getPlayer():getPosition()
-    self.gamera:setPosition(x, inGround and y or self.previousPosition.y)
-    if inGround then
-        self.previousPosition.x, self.previousPosition.y = x, y
-    end
+    local x= gameDirector:getPlayer():getPosition()
+    self.gamera:setPosition(x, self.previousPosition.y)
+    self.previousPosition.x = x
 end
 
 function CameraController:draw(drawFunction)
