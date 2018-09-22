@@ -8,7 +8,7 @@ function CreditsScene:new()
         gameDesign = {"João Victor Oliveira Couto"},
         designers = {enemies = "Lucas Silva Lima", player = "Manuella Vieira", gui = "Lokisley"},
         levelDesign = {"João Victor Oliveira Couto", "Lokisley Oliveira", "Manuella Vieira"},
-        companyImage = love.graphics.newImage("assets/company_logo.png"),
+        companyImage = love.graphics.newImage("assets/engine_logo.png"),
         y = love.graphics.getHeight(),
         elapsedTime = 0,
         speed = 1,

@@ -9,7 +9,6 @@ function SceneDirector:new()
         sceneObjects = {
             mainMenu = require "scenes.MainMenuScene":new(),
             credits = require "scenes.CreditsScene":new(),
-            configurations = require "scenes.ConfigurationScene":new(),
             inGame = require "scenes.InGameScene":new(gameDirector:getWorld().world)
         },
         subsceneObjects = {

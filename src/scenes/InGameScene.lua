@@ -1,15 +1,10 @@
-local Ground = require "models.business.Ground"
-
 local InGameScene = {}
 
 InGameScene.__index = InGameScene
 
 function InGameScene:new(world)
     local this = {
-        ground = Ground:new(world, nil, 800, 30, 400, 570),
-        level_1_map = gameDirector:getLibrary("TilemapLoader"):new("level_1_map", "assets/tilesets")
     }
-    this.level_1_map:parse()
 
     return setmetatable(this, InGameScene)
 end
