@@ -1,0 +1,6 @@
+[submodule "src/libs/MoonJohn"]
+	path = src/libs/MoonJohn
+	url = https://github.com/Jictyvoo/MoonJohn
+[submodule "src/libs/Pixelurite"]
+	path = src/libs/Pixelurite
+	url = https://github.com/Jictyvoo/Pixelurite

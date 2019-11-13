@@ -12,7 +12,7 @@ function EntityController:new()
 end
 
 function EntityController:createAnimation()
-    return gameDirector:configureSpriteSheet("Seaweed.json", "assets/sprites/seaweed/", true, 0.1, 1, 1, true)
+    return gameDirector:getLibrary("Pixelurite").configureSpriteSheet("Seaweed", "assets/sprites/seaweed/", true, 0.1, 1, 1, true)
 end
 
 function EntityController:generateEntities(world)

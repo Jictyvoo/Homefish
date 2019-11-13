@@ -4,12 +4,12 @@ MegalodonAi.__index = MegalodonAi
 
 function MegalodonAi:new(actor)
     assert(actor, "Is needed a actor to manipulate")
-    local this = {
+    local this = setmetatable({
         actor = actor,
         elapsedTime = 0
-    }
+    }, MegalodonAi)
 
-    return setmetatable(this, MegalodonAi)
+    return this
 end
 
 function MegalodonAi:update(dt)

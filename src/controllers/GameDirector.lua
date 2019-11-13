@@ -2,14 +2,14 @@
 local World = require "models.business.World"
 local GameState = require "models.business.GameState"
 
+--Libs
+local MoonJohn = require "libs.MoonJohn"
+local Pixelurite = require "libs.Pixelurite"
+
 --Actors
 local Player = require "models.actors.Player"
 
 --Util
-local SpriteSheet = require "util.SpriteSheet"
-local SpriteAnimation = require "util.SpriteAnimation"
-local Stack = require "util.Stack"
-local TilemapLoader = require "util.TilemapLoader"
 
 --Controllers
 local CameraController = require "controllers.CameraController"
@@ -24,22 +24,10 @@ local GameDirector = {}
 
 GameDirector.__index = GameDirector
 
-function GameDirector:configureSpriteSheet(jsonFile, directory, looping, duration, scaleX, scaleY, centerOrigin)
-    local newSprite = SpriteSheet:new(jsonFile, directory)
-    local frameTable, frameStack = newSprite:getFrames()
-    local newAnimation = SpriteAnimation:new(frameTable, newSprite:getAtlas(), duration)
-    if centerOrigin then
-        newAnimation:setOrigin(newSprite:getCenterOrigin())
-    end
-    newAnimation:setType(looping)
-    newAnimation:setScale(scaleX, scaleY)
-    return newAnimation
-end
-
 function GameDirector:new()
     
     local playerAnimation = {
-        moving = GameDirector:configureSpriteSheet("Player_Move.json", "assets/sprites/player/", true, 0.1, 1, 1, true),
+        moving = Pixelurite.configureSpriteSheet("Player_Move", "assets/sprites/player/", true, 0.1, 1, 1, true),
     }
     local LifeForm = require "models.value.LifeForm"
     local world = World:new()
@@ -55,9 +43,14 @@ function GameDirector:new()
         gameState = GameState:new(),
         --Libraries
         libraries = {
-            SpriteSheet = SpriteSheet, TilemapLoader = TilemapLoader,
+            SpriteSheet = SpriteSheet, MoonJohn = MoonJohn, Pixelurite = Pixelurite,
             SpriteAnimation = SpriteAnimation, Stack = Stack, LifeForm = LifeForm,
             ProgressBar = ProgressBar, GameState = GameState, ButtonManager = ButtonManager
+        },
+        fonts = {
+            default = love.graphics.getFont(),
+            tovariSans = love.graphics.newFont("assets/fonts/TovariSans.ttf", 36),
+            tovariSans_small = love.graphics.newFont("assets/fonts/TovariSans.ttf", 22)
         }
     }
     this.gameState:save(this.dangerBar, "dangerBar")
@@ -73,6 +66,10 @@ end
 function GameDirector:getLibrary(library)
     return self.libraries[library]
 end
+
+function GameDirector:getFonts() return self.fonts end
+
+function GameDirector:getWorld() return self.world end
 
 function GameDirector:keypressed(key, scancode, isrepeat)
     self.player:keypressed(key, scancode, isrepeat)
@@ -123,10 +120,6 @@ end
 
 function GameDirector:getEntityController()
     return self.entityController
-end
-
-function GameDirector:getWorld()
-    return self.world
 end
 
 function GameDirector:runGame()

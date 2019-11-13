@@ -16,8 +16,6 @@ Mover-se para direita e esquerda, podendo haver possibilidade de olhar para cima
 
 * Esquerda: Seta Esquerda
 * Direita: Seta Direita
-* Olhar para cima: Seta Cima
-* Olhar para baixo: Seta Baixo
 
 ## Customização
 
@@ -33,10 +31,6 @@ O script de camera funciona da seguinte forma:
 
 * Começará a seguir o personagem principal sempre que o mesmo chega ao meio da tela depois de mudar a orientação
 * Caso o personagem se encontre nas bordas da tela, a camera permanecerá fixa e não seguirá o mesmo
-* A camera não seguirá o personagem quando o mesmo salta, apenas quando o mesmo cai em uma plataforma que a posição vertical da camera será atualizada
 
 ## Inteligência dos Inimigos
 
-Os inimigos irão cegamente para cima do jogador, atirando com tudo
-
-* Seu Barriga - Ele irá correr atrás do jogador, o qual deve fugir do mesmo para que dessa forma não precise pagar o dinheiro do aluguel naquele momento e economize para as fases posteriores. É possível atirar no mesmo para que dessa forma o atrase

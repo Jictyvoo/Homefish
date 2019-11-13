@@ -12,7 +12,6 @@ Love2d - A Lua Framework, pode ser encontrado nesse link: https://love2d.org . F
 
 * João Victor Oliveira Couto
 * Ananias Nascimento
-* João Pedro Costa Ferreira
 
 ### Designers
 

@@ -22,7 +22,6 @@ Essa pasta tem o intuito de armazenar todos os arquivos de imagem, áudio e font
 Essa pasta contém os principais controladores que são utilizados no jogo.
 
 * CameraController - Controller que possui os scripts de camera para realizar a movimentação e manipulação do mundo do jogo.
-* DataPersistence - Tem o intuito de armazenar os dados de jogo para carregamento futuro, como checkpoints.
 * GameDirector - Controller mais importante de todos, ele manipula todo o jogo, faz a inclusão de cenas, e gerencia os métodos necessários para o funcionamento do game. Ele fica armazenada na tabela global do interpretador, para assim ser acessado em qualquer local.
 * SceneDirector - Controller que gerencia o uso das funções do Love2d através da cena atual de execução
 
@@ -40,7 +39,6 @@ Pasta que contém os arquivos de modelagem do game
 
 Pasta que contém todos os scripts de atores do jogo, como balas, inimigos, dentre outros
 
-* Bullet - Script que determina cada bala na tela de forma individual
 * Enemy - Classe que contém os sprites e funcionamento dos inimigos no jogo
 * MainCharacter - Classe que detecta os eventos de input no teclado para que o jogador possa se locomover e realizar ações
 
@@ -56,7 +54,6 @@ Pasta que contém classes de modelagem que servem como uma abstração para mani
 
 * GameState - Classe que contém os estados anteriores dos objetos, para que dessa forma seja possível carregar os mesmos para um estado anterior ao estado atual do game, dessa forma é possível realizar checkpoints e restartar o game sem que seja necessário finalizar o processo do game
 * World - Faz as manipulações no Mundo do game, alterando seus efeitos na física do mesmo
-* KeyboardManager - Classe que contém todas as informações referentes à determinação de teclas necessárias para jogar o game, sendo que as mesmas podem vir a ser alteradas
 
 #### src/models/business/enemies_ai
 
@@ -84,10 +81,6 @@ Pasta que contém as cenas do game, ou seja, cada uma das telas do jogo
 Pasta que contém os scripts para auxiliar o desenvolvimento do jogo
 
 * ScaleDimension - Arquivo que realiza os cáculos de redimensionamento de tela para que o jogo possa ser portado em telas de tamanhos distintos
-* Stack - Uma pilha, estrutura de dados do tipo LIFO
-* SpriteSheet - Script para gerenciamento dos sprites do jogo. Foi desenvolvido para configurar esses sprites a partir de um arquivo JSON gerado a partir da ferramenta Piskell na versão 0.14
-* SpriteAnimation - Script para realizar uma animação dos sprites baseado no SpriteSheet gerado anteriormente. Para funcionamento do mesmo, é necessário que ele receba uma pilha contendo tabelas com o nome do frame e o Quad gerado para aquele frame.
-* TilemapLoader - Classe que carrega os arquivos de tilemap e cria os objetos desenhaveis dos mesmos
 
 ### src/util/GUI
 

@@ -4,7 +4,7 @@ SplashScreen.__index = SplashScreen
 
 function SplashScreen:new()
     local this = {
-        splash_company = love.graphics.newImage("assets/engine_logo.png"),
+        splash_company = love.graphics.newImage("assets/company_logo.png"),
         splash_loveLogo = love.graphics.newImage("assets/engine_logo.png"),
         all = {"splash_company", "splash_loveLogo"},
         current = 1,
@@ -20,15 +20,12 @@ end
 function SplashScreen:rescaleImage(name, image)
     local imageDimension = {width = image:getWidth(), height = image:getHeight()}
     scaleDimension:calculeScales(name, 300, 300, 0, 0)
-    scaleDimension:relativeScale(name, imageDimension)
-    scaleDimension:generateAspectRatio(name, {isImage = true, centerOffset = true})
+    scaleDimension:generateAspectRatio(name, {isImage = imageDimension, centerOffset = true})
     scaleDimension:centralize(name, true, true, imageDimension)
 end
 
 function SplashScreen:keypressed(key, scancode, isrepeat)
-    if key == "space" then
-        self.elapsedTime = 3
-    end
+    self.elapsedTime = 3
 end
 
 function SplashScreen:update(dt)
@@ -36,7 +33,7 @@ function SplashScreen:update(dt)
     if self.elapsedTime > 2 then
         self.current = self.current + 1
         self.elapsedTime = 0
-        if self.current >= #self.all then
+        if self.current > #self.all then
             sceneDirector:clearStack("mainMenu")
         end
     end
@@ -46,7 +43,7 @@ function SplashScreen:draw()
     local item = self.all[self.current]
     if item then
         local scales = scaleDimension:getScale(item)
-        love.graphics.draw(self[item], scales.x, scales.y, 0, scales.relative.x, scales.relative.y)
+        love.graphics.draw(self[item], scales.x, scales.y, 0, scales.scaleX, scales.scaleY)
     end
 end
 
