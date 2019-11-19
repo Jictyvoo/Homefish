@@ -1,24 +1,17 @@
-local Player = {}
-
-Player.__index = Player
+local Player = {}; Player.__index = Player
 
 function Player:new(spriteAnimation, world)
     
     local this = {
         scale = 0.125,
-        x = 0, y = 0,
-        move = false,
-        hidden = false,
+        x = 0, y = 0, move = false, hidden = false,
         invulnerable = {time = 20, toggle = false, limit = 20},
-        speed = 250,
-        elapsedTime = 0,
-        orientation = "right",
-        direction = "right",
-        animation = "moving",
+        speed = 250, elapsedTime = 0,
+        orientation = "right", direction = "right", animation = "moving",
         movingKeys = {up = "up", down = "down", left = "left", right = "right"},
         world = world or love.physics.newWorld(0, 0),
         spriteAnimation = spriteAnimation or nil,
-        sound = love.audio.newSource("assets/sfx/FishSwimming.wav", "static"),
+        sound = love.audio.newSource("assets/sfx/fishSwimming.wav", "static"),
     }
     
     --aplying physics
@@ -35,8 +28,7 @@ end
 
 function Player:keypressed(key, scancode, isrepeat)
     if self.movingKeys[key] and not self.hidden then
-        self.direction = key;
-        self.move = true
+        self.direction = key; self.move = true
         self.orientation = self.movingKeys[key] == "left" and "left" or self.movingKeys[key] == "right" and "right" or self.orientation
     end
 
@@ -61,9 +53,7 @@ function Player:keyreleased(key, scancode)
     end
 end
 
-function Player:getPosition()
-    return self.body:getX(), self.body:getY()
-end
+function Player:getPosition() return self.body:getX(), self.body:getY() end
 
 function Player:setPosition(x, y)
     assert(x and y, "X and Y must be a value")
@@ -78,34 +68,21 @@ function Player:stopMoving()
 end
 
 function Player:hide(x, y)
-    self.hidden = true
-    self.fixture:setCategory(4)
-    self:setPosition(x, y)
+    self.hidden = true; self.fixture:setCategory(4); self:setPosition(x, y)
 end
 
 function Player:reset()
-    self.move = false
-    self.hidden = false
-    self.body:setLinearVelocity(0, 0)
+    self.move = false; self.hidden = false; self.body:setLinearVelocity(0, 0)
     self.body:setX(10); self.body:setY(700)
-    self.orientation = "right"
-    self.direction = "right"
-    self.animation = "moving"
-    self.invulnerable.time = 20
-    self.invulnerable.active = false
+    self.orientation = "right"; self.direction = "right"; self.animation = "moving"
+    self.invulnerable.time = 20; self.invulnerable.active = false
 end
 
-function Player:beVulnerable()
-    self.fixture:setCategory(1)
-end
+function Player:beVulnerable() self.fixture:setCategory(1) end
 
-function Player:getOrientation()
-    return self.orientation
-end
+function Player:getOrientation() return self.orientation end
 
-function Player:compareFixture(fixture)
-    return self.fixture == fixture
-end
+function Player:compareFixture(fixture) return self.fixture == fixture end
 
 function Player:retreat()
     self.invulnerable.time = 0

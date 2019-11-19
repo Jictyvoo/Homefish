@@ -6,8 +6,8 @@ local GameState = require "models.business.GameState"
 local MoonJohn = require "libs.MoonJohn"
 local Pixelurite = require "libs.Pixelurite"
 
---Actors
-local Player = require "models.actors.Player"
+--Entities
+local Player = require "models.entities.Player"
 
 --Util
 

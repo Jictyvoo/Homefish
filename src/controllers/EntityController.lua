@@ -1,4 +1,4 @@
-local Seaweed = require "models.actors.Seaweed"
+local Seaweed = require "models.entities.Seaweed"
 local EntityController = {}
 
 EntityController.__index = EntityController

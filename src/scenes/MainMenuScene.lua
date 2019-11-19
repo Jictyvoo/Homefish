@@ -75,6 +75,15 @@ function MainMenuScene:draw()
     self.buttonManager:draw()
 end
 
-function MainMenuScene:resize(w, h)end
+function MainMenuScene:resize(w, h)
+--[[
+    for index, value in pairs(self.buttonNames) do
+        local scales = scaleDimension:getScale(index)
+        value:setXY(scales.x, scales.y)
+        value:setDimensions(scales.width, scales.height)
+        value:setScale(scales.relative.x, scales.relative.y)
+    end    
+--]]
+end
 
 return MainMenuScene
