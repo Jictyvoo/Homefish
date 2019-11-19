@@ -4,3 +4,6 @@
 [submodule "src/libs/Pixelurite"]
 	path = src/libs/Pixelurite
 	url = https://github.com/Jictyvoo/Pixelurite
+[submodule "src/libs/StoneMoSScreen"]
+	path = src/libs/StoneMoSScreen
+	url = https://github.com/Jictyvoo/StoneMoSScreen

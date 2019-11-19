@@ -1,7 +1,7 @@
 function love.load()
     --set default constants
     love.graphics.setDefaultFilter('nearest', 'nearest')
-    scaleDimension = require "util.ScaleDimension":new(); scaleDimension:setGameScreenScale(800, 600)
+    StoneMoSScreen = require "libs.StoneMoSScreen"; StoneMoSScreen.new(true, 800, 600)
     gameDirector = require "controllers.GameDirector":new()
     love.graphics.setFont(gameDirector:getFonts().tovariSans)
     sceneDirector = gameDirector:getLibrary("MoonJohn").MoonJohn:new(require "scenes.SplashScreen":new())
@@ -24,6 +24,6 @@ function love.load()
 end
 
 function love.resize(w, h)
-    scaleDimension:screenResize(w, h)
+    StoneMoSScreen:getScaleDimension():screenResize(w, h)
     sceneDirector:resize(w, h)
 end

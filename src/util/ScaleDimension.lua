@@ -33,6 +33,7 @@ function ScaleDimension:calculeScales(itemName, width, height, x, y, originalSca
     end
     item.width = (width * self.graphicsDimensions.width) / originalScale.width
     item.height = (height * self.graphicsDimensions.height) / originalScale.height
+    return self.scaleItems[itemName]
 end
 
 function ScaleDimension:relativeScale(itemName, originalSize)

@@ -4,16 +4,10 @@ MainMenuScene.__index = MainMenuScene
 
 local addButton = function(this, buttonName, sceneName, buttonDimensions, originalSize, callback)
     local scaleButtonName = "menu" .. buttonName
-    scaleDimension:calculeScales(scaleButtonName, unpack(buttonDimensions))
-    scaleDimension:centralize(scaleButtonName, true, false, false)
-    scaleDimension:relativeScale(scaleButtonName, originalSize)
-    local scales = scaleDimension:getScale(scaleButtonName)
 
     --buttonName, x, y, width, height, image, originalImage, animation, 70
-    local button = this.buttonManager:addButton(buttonName, scales.x, scales.y, scales.width, scales.height, this.buttonsQuads, this.buttonsImage)
-    button.callback = callback or function(this) sceneDirector:reset(sceneName); sceneDirector:switchScene(sceneName) end
-    button:setScale(scales.relative.x, scales.relative.y)
-    
+    local button = this.buttonManager:addButton(buttonName, buttonDimensions[3], buttonDimensions[4], buttonDimensions[1], buttonDimensions[2], this.buttonsQuads, this.buttonsImage)
+    button.callback = callback or function(this) sceneDirector:reset(sceneName); sceneDirector:switchScene(sceneName) end    
     this.buttonNames[scaleButtonName] = button
 end
 
@@ -26,10 +20,6 @@ function MainMenuScene:new()
         buttonsQuads = nil,
         buttonNames = {}
     }
-    scaleDimension:calculeScales("menuBackground", this.background:getWidth(), this.background:getHeight(), 0, 0)
-    scaleDimension:calculeScales("menuLogo", 300, 220, 0, 50)
-    scaleDimension:relativeScale("menuLogo", {width = this.logo:getWidth(), height = this.logo:getHeight()})
-    scaleDimension:centralize("menuLogo", true, false, false, false)
 
     local spriteSheet = gameDirector:getLibrary("Pixelurite").getSpritesheet():new("buttons", "assets/gui/")
     local spriteQuads = spriteSheet:getQuads()
@@ -80,21 +70,11 @@ function MainMenuScene:update(dt)
 end
 
 function MainMenuScene:draw()
-    local width, height = love.graphics.getDimensions()
-    local scales = scaleDimension:getScale("menuBackground")
-    love.graphics.draw(self.background, 0, 0, 0, scales.scaleX, scales.scaleY)
-    scales = scaleDimension:getScale("menuLogo")
-    love.graphics.draw(self.logo, scales.x, scales.y, 0, scales.relative.x, scales.relative.y)
+    love.graphics.draw(self.background, 20, 0, 0, 1.393728222996516, 1.363636363636364)
+    love.graphics.draw(self.logo, 400, 300, 0, 1, 1)
     self.buttonManager:draw()
 end
 
-function MainMenuScene:resize(w, h)
-    for index, value in pairs(self.buttonNames) do
-        local scales = scaleDimension:getScale(index)
-        value:setXY(scales.x, scales.y)
-        value:setDimensions(scales.width, scales.height)
-        value:setScale(scales.relative.x, scales.relative.y)
-    end
-end
+function MainMenuScene:resize(w, h)end
 
 return MainMenuScene

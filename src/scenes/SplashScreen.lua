@@ -1,27 +1,28 @@
-local SplashScreen = {}
+local SplashScreen = {}; SplashScreen.__index = SplashScreen
 
-SplashScreen.__index = SplashScreen
+local function rescaleImage(image)
+    local imageDimension = {width = image:getWidth(), height = image:getHeight()}
+    local item = {x = 0, y = 0, scaleX = 0, scaleY = 0, image = image}
+    item.scaleX, item.scaleY = love.graphics.getWidth() / 800, love.graphics.getHeight() / 600
+    local x, y = false, false
+    if item.scaleX < item.scaleY then item.scaleY = item.scaleX
+    else item.scaleX = item.scaleY
+    end
+    item.x = (love.graphics.getWidth() / 2) - imageDimension.width / 2
+    item.y = (love.graphics.getHeight() / 2) - imageDimension.height / 2
+    return item
+end
 
 function SplashScreen:new()
     local this = {
-        splash_company = love.graphics.newImage("assets/company_logo.png"),
-        splash_loveLogo = love.graphics.newImage("assets/engine_logo.png"),
+        splash_company = rescaleImage(love.graphics.newImage("assets/company_logo.png")),
+        splash_loveLogo = rescaleImage(love.graphics.newImage("assets/engine_logo.png")),
         all = {"splash_company", "splash_loveLogo"},
         current = 1,
         elapsedTime = 0
     }
     
-    SplashScreen:rescaleImage("splash_loveLogo", this.splash_loveLogo)
-    SplashScreen:rescaleImage("splash_company", this.splash_company)
-    
     return setmetatable(this, SplashScreen)
-end
-
-function SplashScreen:rescaleImage(name, image)
-    local imageDimension = {width = image:getWidth(), height = image:getHeight()}
-    scaleDimension:calculeScales(name, 300, 300, 0, 0)
-    scaleDimension:generateAspectRatio(name, {isImage = imageDimension, centerOffset = true})
-    scaleDimension:centralize(name, true, true, imageDimension)
 end
 
 function SplashScreen:keypressed(key, scancode, isrepeat)
@@ -42,8 +43,7 @@ end
 function SplashScreen:draw()
     local item = self.all[self.current]
     if item then
-        local scales = scaleDimension:getScale(item)
-        love.graphics.draw(self[item], scales.x, scales.y, 0, scales.scaleX, scales.scaleY)
+        love.graphics.draw(self[item].image, self[item].x, self[item].y, 0, self[item].scaleX, self[item].scaleY)
     end
 end
 
